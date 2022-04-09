@@ -23,7 +23,7 @@ class ChatController {
 
     async allMessageChat(req,res){
         const{id_chat}=req.body
-        const sql = "select * from message where id_chat=$1";
+        const sql = "select * from message where id_chat=$1 order by message.created_at";
         const data=[id_chat]
 
         pool.query(sql ,data,function(err, result) {

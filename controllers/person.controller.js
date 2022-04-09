@@ -14,7 +14,7 @@ class PersonController {
     }
     async allChatPerson(req,res){
         const{id_person}=req.body
-        const sql = "select * from chat where id in (select id_chat from person_chat where person_chat.id_person=$1)";
+        const sql = "select * from chat where id in (select id_chat from person_chat where person_chat.id_person=$1 order by  chat.created_at DESC )";
         const data=[id_person]
 
         pool.query(sql ,data,function(err, result) {
