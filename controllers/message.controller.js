@@ -3,11 +3,13 @@ const  pool=require('../db')
 class MessageController {
 
     async createMessage(req,res){
-        const{text}=req.body
+        const{id_person,id_chat,text}=req.body
 
-        const sql = "INSERT INTO message(text,created_at) VALUES($1, $2) ";
-        const data = [text,new Date()];
+        const sql = "INSERT INTO message(id_person,id_chat,text,created_at) VALUES($1, $2, $3, $4) ";
+        const data = [id_person,id_chat,text,new Date()];
         const name=[text]
+
+        console.log(data)
 
         pool.query(sql,data ,function(err, results) {
             if(err) res.json(err);
