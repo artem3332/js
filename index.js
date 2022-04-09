@@ -16,5 +16,10 @@ app.use('/api',chatRouter)
 app.use(express.json())
 app.use('/api',messageRouter)
 
+app.use(express.json())
+app.get('/api',personRouter)
+
+app.use(express.json())
+app.get('/api',messageRouter)
 
 app.listen(PORT,()=>console.log('server started on port',PORT))

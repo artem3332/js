@@ -20,5 +20,16 @@ class ChatController {
                 res.json(result.rows[0].id)
         });
     }
+
+    async allMessageChat(req,res){
+        const{id_chat}=req.body
+        const sql = "select * from message where id_chat=$1";
+        const data=[id_chat]
+
+        pool.query(sql ,data,function(err, result) {
+            if(err) res.json(err);
+            res.json(result.rows)
+        });
+    }
 }
 module.exports=new ChatController()

@@ -31,3 +31,5 @@ create TABLE person_chat(
     CONSTRAINT PK_person_chat PRIMARY KEY (id_person,id_chat)
 );
 
+
+
