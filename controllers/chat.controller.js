@@ -24,7 +24,7 @@ class ChatController {
     }
     async allChatUser(req,res){
         const{id_user}=req.body
-        const sql = "select * from chat where id in (select id_chat from user_chat where user_chat.id_user=$1  ) order by  chat.created_at ";
+        const sql="select chat.id,chat.name,chat.created_at from chat  join message on chat.id=message.id_chat  where chat.id in (select id_chat from user_chat where id_user=$1  ) order by  message.created_at "
         const data=[id_user];
 
         pool.query(sql ,data,function(err, result) {
