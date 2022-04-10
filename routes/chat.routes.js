@@ -3,7 +3,8 @@ const chatController=require('../controllers/chat.controller')
 
 const router = new Router()
 
-router.post('/chat',chatController.createChat)
-router.get('/all_message',chatController.allMessageChat)
+router.post('/add',chatController.createChat)
+router.get('/get',chatController.allChatUser)
+
 
 module.exports=router

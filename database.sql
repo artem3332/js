@@ -1,7 +1,7 @@
 
-create TABLE person(
+create TABLE users(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
+    name VARCHAR(255) UNIQUE,
     created_at timestamp
 
 
@@ -9,7 +9,7 @@ create TABLE person(
 
 create TABLE chat(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
+    name VARCHAR(255)  UNIQUE,
     created_at timestamp
 
 
@@ -17,7 +17,7 @@ create TABLE chat(
 
 create TABLE message(
     id SERIAL PRIMARY KEY,
-    id_person SERIAL not null references person (id),
+    id_user SERIAL not null references users (id),
     id_chat SERIAL not null references chat (id),
     text VARCHAR(255),
     created_at timestamp
@@ -25,10 +25,10 @@ create TABLE message(
 
 );
 
-create TABLE person_chat(
-    id_person SERIAL not null references person (id),
+create TABLE user_chat(
+    id_user SERIAL not null references users (id),
     id_chat SERIAL not null references chat (id),
-    CONSTRAINT PK_person_chat PRIMARY KEY (id_person,id_chat)
+    CONSTRAINT PK_user_chat PRIMARY KEY (id_user,id_chat)
 );
 
 
