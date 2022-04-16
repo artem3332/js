@@ -1,4 +1,4 @@
-const Pool = require('pg').Pool
+const {Pool} = require('pg')
 const  pool = new Pool({
     user: "postgres",
     password:'root',
@@ -8,5 +8,7 @@ const  pool = new Pool({
 
 
 })
+
+pool.connect()
 
 module.exports=pool

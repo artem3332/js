@@ -1,5 +1,5 @@
 const Router = require('express')
-const chatController=require('../controllers/chat.controller')
+const chatController=require('../controllers/ChatController')
 
 const router = new Router()
 

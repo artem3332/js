@@ -1,7 +1,7 @@
 const express = require('express')
-const userRouter=require('./routes/user.routes')
-const chatRouter=require('./routes/chat.routes')
-const messageRouter=require('./routes/message.routes')
+const userRouter=require('./routes/UserRoutes')
+const chatRouter=require('./routes/ChatRoutes')
+const messageRouter=require('./routes/MessageRoutes')
 
 const PORT = process.env.PORT|| 9000
 
