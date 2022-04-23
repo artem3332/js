@@ -1,19 +1,34 @@
-const  pool=require('../db')
+const message_data=require("../DataBase").message
 
 
 class MessageService{
 
     async createMessage(req) {
         const {id_user, id_chat, text} = req.body
-        const sql = "INSERT INTO message(id_user,id_chat,text,created_at) VALUES($1, $2, $3, $4) RETURNING id ";
         const data = [id_user, id_chat, text, new Date()];
-        return pool.query(sql, data);
+
+        const id_message=await message_data.create({
+            id_user:data[0],
+            id_chat:data[1],
+            text:data[2],
+            created_at:data[3]
+        })
+        return id_message.id
     }
+
+
     async allMessageChat(req) {
         const {id_chat} = req.body
-        const sql = "select * from message where id_chat=$1 order by message.created_at DESC";
         const data = [id_chat];
-        return pool.query(sql, data);
+        const messages=await message_data.findAll({
+            where:{
+                id_chat:data[0]
+            },
+            order:[
+                ['created_at','DESC']
+            ]
+        })
+        return messages
     }
 }
 

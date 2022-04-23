@@ -1,41 +1,38 @@
-const pool = require("../db");
-
+const chat_data=require("../DataBase").chat
+const user_chat_data=require("../DataBase").user_chat
 
 class ChatService {
-    async createChat(req, res) {
+    async createChat(req) {
         const {name, user_ids} = req.body
-        const sql = "INSERT INTO chat(name,created_at) VALUES($1, $2) RETURNING id ";
         const data = [name, new Date()];
-        pool.query(sql,data ,function(err, result) {
-            if(err) res.json(err);
-            for (const user_id in user_ids) {
-
-                const sql = "INSERT INTO user_chat(id_user,id_chat) VALUES($1, $2) ";
-                const data1=[user_ids[user_id],result.rows[0].id];
-
-                pool.query(sql,data1 ,function(err) {
-                    if (err) res.json(err) ;
-
-                });
+        const id_chat=await chat_data.create(
+            {
+            name:data[0],
+            created_at:data[1]
             }
-            res.json(result.rows[0].id) ;
-
-
-        });
-
+        )
+        for(const id_users of user_ids){
+            await user_chat_data.create(
+                {
+                id_user:id_users,
+                id_chat:id_chat.id,
+                }
+            )
+        }
+        return id_chat.id
     }
-
-
     async allChatUser(req) {
         const {id_user} = req.body
-        const sql = "select  chat.id,chat.name,chat.created_at from chat where chat.id in (select  id_chat from user_chat where id_user=$1)"
         const data = [id_user];
-        return pool.query(sql, data)
+        const id_chats=[await user_chat_data.findAll({
+            where: {
+                id_user: data[0]
+            },
+            attributes: { exclude: ['id_user']},
+        })]
+        return id_chats
     }
-
-
 }
-
 
 module.exports=new ChatService()
 

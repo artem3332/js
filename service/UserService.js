@@ -1,13 +1,21 @@
-const pool = require("../db");
-
+const user_data=require("../DataBase").user
 class UserService {
 
-    createUser(req) {
+    async createUser(req) {
         const {name} = req.body;
-        const sql = "INSERT INTO users(name,created_at) VALUES($1, $2) RETURNING id ";
         const data = [name, new Date()];
-        return  pool.query(sql, data);
+        const id_user=await user_data.create(
+            {
+                name:data[0],
+                created_at:data[1]
+            }
+        )
+        console.log(id_user.id)
+        return id_user.id
+
     }
+
+
 }
 module.exports=new UserService()
 

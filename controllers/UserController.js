@@ -5,7 +5,7 @@ class UserController {
     async createUser(req,res){
         try{
             const x=await userService.createUser(req)
-            res.json(x.rows[0].id)
+            res.json(x)
         } catch (e){
           res.status(500).json(e)
         }
